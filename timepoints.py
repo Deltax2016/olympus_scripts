@@ -59,8 +59,8 @@ timestamp_start = 1617291702
 wallet = "0x0822f3c03dcc24d200aff33493dc08d0e1f274a2"
 res = getTimepoints(number_of_periods, delta_per_period, timestamp_start, wallet)
 
-for i in range(len(res)):
-    print(res[i])
+for i in res:
+    print(i)
 
 
 
