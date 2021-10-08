@@ -26,30 +26,29 @@ def getTopBalances(timestamp_start, timestamp_end, balance_gt):
     
     days = {}
 
+
     for day in result['dailyBalances']:
         if not (str(day['day']) in days):
-            days[str(day['day'])] = []
+            days[str(day['day'])] = {}
 
         tempHours = {}
         for hour in day['hourBalance']:
             tempHours[hour['hour']] = {}
             tempHours[hour['hour']]['ohmBalance'] = hour['ohmBalance']
-        days[str(day['day'])].append({
-            'wallet': day['address'],
-            'ohmBalance': day['ohmBalance'],
-            'hourBalances': tempHours
-        })
+        days[str(day['day'])][day['address']] = {}
+        days[str(day['day'])][day['address']]['ohmBalance'] = day['ohmBalance']
+        days[str(day['day'])][day['address']]['hourBalances'] = tempHours
 
 
     for day in days:
-        for wallet in range(len(days[day])):
+        for wallet in days[day]:
             for hour in range(24):
-                if not (hour in days[day][wallet]['hourBalances']):
+                if not (str(hour) in days[day][wallet]['hourBalances']):
                     if hour !=0:
                         days[day][wallet]['hourBalances'][str(hour)] = {}
                         days[day][wallet]['hourBalances'][str(hour)]['ohmBalance'] = days[day][wallet]['hourBalances'][str(hour-1)]['ohmBalance']
                     else:
-                        if str(int(day)-1) in days:
+                        if (str(int(day)-1) in days) and (wallet in days[str(int(day)-1)]):
                             days[day][wallet]['hourBalances'][str(hour)] = {}
                             days[day][wallet]['hourBalances'][str(hour)]['ohmBalance'] = days[str(int(day)-1)][wallet]['hourBalances'][str(hour)]['ohmBalance']
                         else:
@@ -63,7 +62,7 @@ timestamp_end = 1617691702
 amount = 100000
 res = getTopBalances(timestamp_start, timestamp_end, amount)
 
-print(res['90'][0])
+print(res['90']["0x99415fb42b7841604056ee713f9e7080e204c82f"])
 
 
 
