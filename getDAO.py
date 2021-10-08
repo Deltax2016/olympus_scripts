@@ -30,9 +30,10 @@ def getBalance(address=None):
     query = gql(queryString)
 
     result = client.execute(query)
+    print(result)
     
     wallets = []
-    for i in range(1):
+    for i in range(len(result['wallets'])):
         tempWallet = {}
         tempWallet['address'] = result['wallets'][i]['id']
         tempWallet['days'] = {}
