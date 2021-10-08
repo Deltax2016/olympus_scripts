@@ -30,9 +30,6 @@ def getFirstWallets(cnt=None):
     query = gql(queryString)
 
     result = client.execute(query)
-
-    #print(result['wallets'][0])
-
     
     wallets = []
     for i in range(cnt):
