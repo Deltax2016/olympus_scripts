@@ -4,10 +4,10 @@ from gql.transport.aiohttp import AIOHTTPTransport
 transport = AIOHTTPTransport(url="https://api.thegraph.com/subgraphs/name/deltax2016/olympus-wallets")
 client = Client(transport=transport, fetch_schema_from_transport=True)
 
-def getBalance(address=None, timestamp_start=None, timestamp_end=None):
+def getBalance(address=None):
 
     queryString = f"""query getDAO {{
-        dailyBalances(orderBy: timestamp, where: {{address: "{address}",timestamp_gt: {timestamp_start}, timestamp_lt: {timestamp_end}}}) {{
+        dailyBalances(orderBy: timestamp, where: {{address: "{address}",}}) {{
             ohmBalance
             day
             hourBalance(orderBy: timestamp) {{
@@ -67,13 +67,11 @@ def getBalance(address=None, timestamp_start=None, timestamp_end=None):
 
     return tempWallet
 
-N = 10
-timestamp_start = 1617291702
-timestamp_end = 1617691702
 wallet = "0x245cc372C84B3645Bf0Ffe6538620B04a217988B"
-res = getBalance(wallet, timestamp_start, timestamp_end)
+res = getBalance(wallet)
 
-print(res['days']['282'])
+
+print(res['days']['120'])
 
 
 

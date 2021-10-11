@@ -9,6 +9,13 @@ def getActivated(timestamp_start, timestamp_end):
     queryString = f"""query getActivated {{
         wallets(where: {{birth_gt:{timestamp_start}, birth_lt: {timestamp_end}}}) {{
             address
+            ohmBalance
+            dailyBalance {{
+                ohmBalance
+                hourBalance {{
+                    ohmBalance
+                }}
+            }}
         }}
     }}
     """
